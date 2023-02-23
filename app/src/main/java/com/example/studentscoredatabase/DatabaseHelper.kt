@@ -48,7 +48,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         db.close()
     }
     // This method is get all User records from DB
-    fun getAllUsers(): ArrayList<User> {
+    fun getAll(): ArrayList<User> {
         // create a readable DB variable of our database to read record
 
         val db = this.readableDatabase
@@ -70,7 +70,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         return userList
     }
 
-    fun deleteUser(subject: String): Int {
+    fun delete(subject: String): Int {
         // create a writable DB variable of our database to delete record
         val db = this.writableDatabase
         // delete a user by NAME
@@ -78,7 +78,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         db.close();
         return rows // 0 or 1
     }
-    fun updateUser(subject: String, score: String): Int {
+    fun update(subject: String, score: String): Int {
         // create a writable DB variable of our database to update record
         val db = this.writableDatabase
         // This ContentValues class is used to store a set of values
