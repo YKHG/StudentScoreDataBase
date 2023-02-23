@@ -10,7 +10,7 @@
 
     <!-- Button to add User -->
         <Button
-            android:id="@+id/btnAdd"
+            android:id="@+id/btnAddUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -19,7 +19,7 @@
             android:textSize="20sp" />
         <!-- Button to delete User by name -->
         <Button
-            android:id="@+id/btnDelete"
+            android:id="@+id/btnDeleteUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -28,7 +28,7 @@
             android:textSize="20sp" />
         <!-- Button to update User age by name-->
         <Button
-            android:id="@+id/btnUpdate"
+            android:id="@+id/btnUpdateUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -37,7 +37,7 @@
             android:textSize="20sp" />
         <!-- Button to print Users -->
         <Button
-            android:id="@+id/btnPrint"
+            android:id="@+id/btnPrintUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

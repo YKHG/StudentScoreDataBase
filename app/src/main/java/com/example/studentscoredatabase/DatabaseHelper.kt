@@ -10,12 +10,12 @@ import android.widget.Toast
 class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
     companion object {
-        private val DB_NAME = "student_management "
-        private val DB_VERSION = 1
-        val TABLE_NAME = " student_score"
-        val ID = "id"
-        val Subject = "Subject"
-        val Score = "Score"
+        private const val DB_NAME = "student_management "
+        private const val DB_VERSION = 1
+        const val TABLE_NAME = " student_score"
+        const val ID = "id"
+        const val Subject = "Subject"
+        const val Score = "Score"
     }
     override fun onCreate(db: SQLiteDatabase?) {
         val query = (
@@ -34,7 +34,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         onCreate(db)
     }
     // This method is to add a User record in DB
-    fun addUser(subject: String, score: String) {
+    fun add(subject: String, score: String) {
         // This ContentValues class is used to store a set of values
         val values = ContentValues()
         // insert key-value pairs
@@ -53,7 +53,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
 
         val db = this.readableDatabase
         // read all records from DB and get the cursor
-        val cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null)
+        val cursor = db.rawQuery("SELECT * FROM $TABLE_NAME", null)
         val userList = ArrayList<User>() // User ArrayList
         if (cursor.moveToFirst()) {
             do { // add all users to the list

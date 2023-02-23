@@ -18,25 +18,27 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val btnAddUser = findViewById<Button>(R.id.btnAdd)
-        btnAddUser.setOnClickListener {
+        val btnAdd = findViewById<Button>(R.id.btnAddUser)
+        btnAdd.setOnClickListener {
             val dialogBuilder = AlertDialog.Builder(this)
             val inflater = this.layoutInflater
             val dialogView = inflater.inflate(R.layout.add_dialog, null)
+
             dialogBuilder.setTitle("Add Subject")
             dialogBuilder.setMessage("Enter Score")
             dialogBuilder.setView(dialogView)
             // Set a listener to each button that takes an action before dismissing the dialog
             // The dialog is automatically dismissed when a dialog button is clicked
+
             dialogBuilder.setPositiveButton("Yes",
                 DialogInterface.OnClickListener { dialog, id ->
                     // do this if "Yes" is clicked
                     val db = DBHelper(this, null)
-                    val etAddSubject = dialogView.findViewById<EditText>(R.id.etSubject)
-                    val etAddScore = dialogView.findViewById<EditText>(R.id.etScore)
+                    val etAddSubject = dialogView.findViewById<EditText>(R.id.etADDSubject)
+                    val etAddScore = dialogView.findViewById<EditText>(R.id.etADDScore)
                     val Subject = etAddSubject.text.toString()
                     val Score = etAddScore.text.toString()
-                    db.addUser(Subject, Score)
+                    db.add(Subject, Score)
                     Toast.makeText(this, "$Subject added to database", Toast.LENGTH_SHORT).show()
                 }
             )
@@ -48,38 +50,40 @@ class MainActivity : AppCompatActivity() {
             dialogBuilder.setIcon(R.drawable.ic_launcher_background)
             dialogBuilder.show()
         }
-        val btnPrintUsers = findViewById<Button>(R.id.btnPrint)
+        val btnPrintUsers = findViewById<Button>(R.id.btnPrintUser)
         btnPrintUsers.setOnClickListener {
             val db = DBHelper(this, null)
             val userList = db.getAll()
-            val tvUserRecord = findViewById<TextView>(R.id.tvUserRecord)
-            tvUserRecord.text = "### subject ###\n"
+            val tvRecord = findViewById<TextView>(R.id.tvUserRecord)
+            tvRecord.text = "### subject ###\n"
             userList.forEach {
-                tvUserRecord.append("$it\n")
+                tvRecord.append("$it\n")
             }
         }
 
-        val btnDeleteUser = findViewById<Button>(R.id.btnDelete)
-            btnDeleteUser.setOnClickListener {
+        val btnDeleteSubject = findViewById<Button>(R.id.btnDeleteUser)
+        btnDeleteSubject.setOnClickListener {
             val dialogBuilder = AlertDialog.Builder(this)
             val dialogView = this.layoutInflater.inflate(R.layout.delete_dialog, null)
+
             dialogBuilder.setTitle("Delete subject")
             dialogBuilder.setMessage("Enter data below")
             dialogBuilder.setView(dialogView)
+
             // Set a listener to each button that takes an action before dismissing the dialog
             // The dialog is automatically dismissed when a dialog button is clicked
             dialogBuilder.setPositiveButton("Yes",
                 DialogInterface.OnClickListener { dialog, id ->
                     // do this if "Yes" is clicked
                     val db = DBHelper(this, null)
-                    val etDeleteName = dialogView.findViewById<EditText>(R.id.etDeleteSubject)
-                    val name = etDeleteName.text.toString()
+                    val etDeleteSubject = dialogView.findViewById<EditText>(R.id.etDeleteSubject)
+                    val name = etDeleteSubject.text.toString()
                     val rows = db.delete(name)
                     Toast.makeText(
                         this,
                         when (rows) {
                             0 -> "Nothing deleted"
-                            1 -> "Subject deleted"
+                            1 -> "subject deleted"
                             else -> "" // shouldn't happen
                         },
                         Toast.LENGTH_LONG
@@ -91,13 +95,35 @@ class MainActivity : AppCompatActivity() {
             dialogBuilder.show()
         }
 
-        val btnUpdateUser = findViewById<Button>(R.id.btnUpdate)
+        val btnUpdateUser = findViewById<Button>(R.id.btnUpdateUser)
         btnUpdateUser.setOnClickListener {
-            val db = DBHelper(this, null)
-            val subject = findViewById<EditText>(R.id.etSubject).text.toString()
-            val score = findViewById<EditText>(R.id.etScore).text.toString()
-            val rows = db.update(subject, score)
-            Toast.makeText(this, "$rows subject updated", Toast.LENGTH_LONG).show()
+            val dialogView = this.layoutInflater.inflate(R.layout.update_dialog, null)
+            /*
+            Kotlin is both a functional programming and an OOP language
+            */
+            AlertDialog.Builder(this)
+                .setTitle("Update User")
+                .setMessage("Enter data below")
+                .setView(dialogView)
+                // Set a listener to each button that takes an action before dismissing the dialog
+                // The dialog is automatically dismissed when a dialog button is clicked
+                .setPositiveButton(
+                    "Yes",
+                    DialogInterface.OnClickListener { dialog, id ->
+                        // do this if "Yes" is clicked
+                        val db = DBHelper(this, null)
+                        val etUpdateName = dialogView.findViewById<EditText>(R.id.etUpdateSubject)
+                        val etUpdateAge = dialogView.findViewById<EditText>(R.id.etUpdateScore)
+
+                        val name = etUpdateName.text.toString()
+                        val age = etUpdateAge.text.toString()
+                        val rows = db.update(name, age)
+                        Toast.makeText(this, "$rows users updated", Toast.LENGTH_LONG).show()
+                    }
+                )
+                .setNegativeButton("No", null) // nothing to do
+                .setIcon(R.drawable.ic_launcher_background)
+                .show()
         }
     }
 }
