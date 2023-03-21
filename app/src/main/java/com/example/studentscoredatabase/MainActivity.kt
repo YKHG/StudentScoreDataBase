@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog
 
 class MainActivity : AppCompatActivity() {
 
+    // Declare class variables
     private lateinit var dbHelper: DBHelper
     private lateinit var etName: EditText
     private lateinit var etEmail: EditText
@@ -22,26 +23,33 @@ class MainActivity : AppCompatActivity() {
     private lateinit var etSearchName: EditText
     private lateinit var tvResult: TextView
 
+    // This method is called when the activity is created
     @SuppressLint("MissingInflatedId", "Range")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Initialize class variables
         dbHelper = DBHelper(this)
         etName = findViewById(R.id.etName)
         etEmail = findViewById(R.id.etEmail)
         etMobile = findViewById(R.id.etMobile)
         etDeleteId = findViewById(R.id.etDeleteId)
         etSearchName = findViewById(R.id.etSearchName)
-        tvResult = findViewById(R.id.tvResult)
 
+
+        // Add button click listener for adding a new user
         val btnAddUser = findViewById<Button>(R.id.btnAddUser)
         btnAddUser.setOnClickListener {
+            // Get user input from EditText fields
             val name = etName.text.toString()
             val email = etEmail.text.toString()
             val mobile = etMobile.text.toString()
 
+            // Insert the new user into the database
             val result = dbHelper.insertCustomer(name, email, mobile)
+
+            // Show a Toast message to indicate success or failure
             if (result == -1L) {
                 Toast.makeText(this, "Failed to add customer", Toast.LENGTH_SHORT).show()
             } else {
@@ -59,7 +67,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Please enter a valid ID", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-
+// Search the database for customers with the given name
             val result = dbHelper.deleteCustomer(id)
             if (result == 0) {
                 Toast.makeText(this, "Failed to delete customer", Toast.LENGTH_SHORT).show()
@@ -148,6 +156,12 @@ class MainActivity : AppCompatActivity() {
 
             val dialog = dialogBuilder.create()
             dialog.show()
+        }
+        val btnReset = findViewById<Button>(R.id.btnReset)
+        btnReset.setOnClickListener {
+            // Call the resetTable() method of the DBHelper class
+            dbHelper.resetTable()
+            Toast.makeText(this, "Table reset", Toast.LENGTH_SHORT).show()
         }
 
     }
