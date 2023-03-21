@@ -6,14 +6,26 @@
     android:layout_height="match_parent">
 
     <EditText
+        android:id="@+id/etUpdateId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter ID"/>
+    <EditText
         android:id="@+id/etUpdateName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter subject"/>
+        android:hint="Enter Name"/>
+
 
     <EditText
-        android:id="@+id/etUpdateAge"
+        android:id="@+id/etUpdateEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter score"/>
+        android:hint="Enter email"/>
+
+    <EditText
+        android:id="@+id/etUpdateMobile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Mobile"/>
 </LinearLayout>

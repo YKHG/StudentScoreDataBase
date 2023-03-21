@@ -1,79 +1,102 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="8dp"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
-
-    <!-- NOTE: Enter User Name and Enter User Age EditText have been removed -->
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:orientation="vertical">
-
-        <!-- Button to add User -->
-        <Button
-            android:id="@+id/btnAddUser"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:text="Add"
-            android:textSize="20sp" />
-
-        <!-- Button to delete User by name -->
-        <Button
-            android:id="@+id/btnDeleteUser"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Delete by Subject"
-            android:textSize="20sp" />
-
-        <!-- Button to update User age by name-->
-        <Button
-            android:id="@+id/btnUpdateUser"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Update by Subject"
-            android:textSize="20sp" />
-
-        <!-- Button to print Users -->
-        <Button
-            android:id="@+id/btnPrintUsers"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Print All"
-            android:textSize="20sp" />
-    </LinearLayout>
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <ScrollView
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name:" />
+
+        <EditText
+            android:id="@+id/etName"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:hint="Enter name" />
 
-            <!-- Text view: Id, Name, Age -->
-            <TextView
-                android:id="@+id/tvUserRecord"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20sp"
-                android:padding="10sp"
-                android:text="Subject:\n"
-                android:textAlignment="center"
-                android:textColor="#000000"
-                android:textSize="20sp" />
-        </ScrollView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email:" />
+
+        <EditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter email" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mobile:" />
+
+        <EditText
+            android:id="@+id/etMobile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter mobile" />
+
+        <Button
+            android:id="@+id/btnAddUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add User" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete user by ID:" />
+
+        <EditText
+            android:id="@+id/etDeleteId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter ID" />
+
+        <Button
+            android:id="@+id/btnDeleteUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Delete User" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search user by name:" />
+
+        <EditText
+            android:id="@+id/etSearchName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter name" />
+
+        <Button
+            android:id="@+id/btnSearchUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Search User" />
+        <Button
+            android:id="@+id/btnShowAll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Show all users" />
+
+
+        <Button
+            android:id="@+id/btnUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Update User" />
+        <TextView
+            android:id="@+id/tvResult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Results will be displayed here" />
+
     </LinearLayout>
-</LinearLayout>
+</ScrollView>

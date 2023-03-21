@@ -1,93 +1,113 @@
 package com.example.studentscoredatabase
 
+
+
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 
-class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
-    SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
-    var context: Context
-    init {
-        this.context = context
-    }
-
+class DBHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
     companion object {
-        private val DB_NAME = "student_score_database"
-        private val DB_VERSION = 1
-        val TABLE_NAME = "score_table"
-        val ID = "id"
-        val SUBJECT = "subject"
-        val SCORE = "score"
+        private const val DB_NAME = "smtbiz.db"
+        private const val DB_VERSION = 1
+
+        const val TABLE_NAME = "customer"
+        const val ID = "Id"
+        const val NAME = "Name"
+        const val EMAIL = "Email"
+        const val MOBILE = "Mobile"
     }
 
-    override fun onCreate(db: SQLiteDatabase?) {
-        val query = (
-                "CREATE TABLE $TABLE_NAME (" +
-                        "$ID INTEGER PRIMARY KEY," +
-                        "$SUBJECT TEXT," +
-                        "$SCORE INTEGER" + ")"
-                )
-        db?.execSQL(query)
-
-        Log.i("onCreate", "TABLE CREATED!!!")
+    override fun onCreate(db: SQLiteDatabase) {
+        val createTableQuery = "CREATE TABLE $TABLE_NAME ($ID INTEGER PRIMARY KEY, $NAME TEXT, $EMAIL TEXT, $MOBILE TEXT)"
+        db.execSQL(createTableQuery)
+        Log.i("DBHelper", "Table $TABLE_NAME created")
     }
 
-    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        db!!.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
         onCreate(db)
-
-        Log.i("onUpgrade", "DATABASE UPGRADED!!!")
     }
 
-    fun addScore(subject: String, score: Int) {
-        val values = ContentValues()
-        values.put(SUBJECT, subject)
-        values.put(SCORE, score)
+    fun resetTable() {
+        val db = writableDatabase
+        db.delete(TABLE_NAME, null, null)
 
-        val db = this.writableDatabase
-        db.insert(TABLE_NAME, null, values)
+        val initialValues = listOf(
+            ContentValues().apply {
+                put(NAME, "John Doe")
+                put(EMAIL, "john.doe@example.com")
+                put(MOBILE, "555-1234")
+            },
+            ContentValues().apply {
+                put(NAME, "Jane Smith")
+                put(EMAIL, "jane.smith@example.com")
+                put(MOBILE, "555-5678")
+            },
+            ContentValues().apply {
+                put(NAME, "Alice Lee")
+                put(EMAIL, "alice.lee@example.com")
+                put(MOBILE, "555-9012")
+            },
+            ContentValues().apply {
+                put(NAME, "Bob Chen")
+                put(EMAIL, "bob.chen@example.com")
+                put(MOBILE, "555-3456")
+            },
+            ContentValues().apply {
+                put(NAME, "Carol Kim")
+                put(EMAIL, "carol.kim@example.com")
+                put(MOBILE, "555-7890")
+            }
+        )
+
+        initialValues.forEach { db.insert(TABLE_NAME, null, it) }
         db.close()
     }
 
-    fun getAllScores(): ArrayList<Score> {
-        val db = this.readableDatabase
-        val cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null)
-        val scoreList = ArrayList<Score>()
-
-        if (cursor.moveToFirst()) {
-            do {
-                scoreList.add(
-                    Score(
-                        cursor.getInt(cursor.getColumnIndexOrThrow(ID)),
-                        cursor.getString(cursor.getColumnIndexOrThrow(SUBJECT)),
-                        cursor.getInt(cursor.getColumnIndexOrThrow(SCORE))
-                    )
-                )
-            } while (cursor.moveToNext())
+    fun insertCustomer(name: String, email: String, mobile: String): Long {
+        val db = writableDatabase
+        val values = ContentValues().apply {
+            put(NAME, name)
+            put(EMAIL, email)
+            put(MOBILE, mobile)
         }
 
-        cursor.close()
-        return scoreList
+        val rowId = db.insert(TABLE_NAME, null, values)
+        db.close()
+        return rowId
     }
 
-    fun deleteScore(subject: String): Int {
-        val db = this.writableDatabase
-        val rows = db.delete(TABLE_NAME, "$SUBJECT=?", arrayOf(subject))
+    fun deleteCustomer(id: Long): Int {
+        val db = writableDatabase
+        val result = db.delete(TABLE_NAME, "$ID = ?", arrayOf(id.toString()))
         db.close()
-
-        return rows
+        return result
     }
 
-    fun updateScore(subject: String, score: String): Int {
-        val values = ContentValues()
-        values.put(SCORE, score)
+    fun searchCustomer(name: String): Cursor {
+        val db = readableDatabase
+        return db.query(TABLE_NAME, null, "$NAME LIKE ?", arrayOf("%$name%"), null, null, null)
+    }
 
-        val db = this.writableDatabase
-        val rows = db.update(TABLE_NAME, values, "$SUBJECT=?", arrayOf(subject))
+    fun getAllCustomers(): Cursor {
+        val db = readableDatabase
+        return db.query(TABLE_NAME, null, null, null, null, null, null)
+    }
+
+    fun updateCustomer(id: Long, name: String, email: String, mobile: String): Int {
+        val db = writableDatabase
+        val values = ContentValues().apply {
+            put(NAME, name)
+            put(EMAIL, email)
+            put(MOBILE, mobile)
+        }
+
+        val result = db.update(TABLE_NAME, values, "$ID = ?", arrayOf(id.toString()))
         db.close()
-
-        return rows
+        return result
     }
 }
