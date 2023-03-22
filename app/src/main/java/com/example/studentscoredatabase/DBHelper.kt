@@ -89,13 +89,15 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_V
     }
 
     fun searchCustomer(name: String): Cursor {
-        val db = readableDatabase
-        return db.query(TABLE_NAME, null, "$NAME LIKE ?", arrayOf("%$name%"), null, null, null)
+        val db = this.readableDatabase
+        return db.query(TABLE_NAME, arrayOf(ID, NAME, EMAIL, MOBILE),
+            "$ID=?", arrayOf(ID.toString()), null, null, null)
     }
 
     fun getAllCustomers(): Cursor {
-        val db = readableDatabase
-        return db.query(TABLE_NAME, null, null, null, null, null, null)
+        val db = this.readableDatabase
+        return db.query(TABLE_NAME, arrayOf(ID, NAME, EMAIL, MOBILE),
+            null, null, null, null, null)
     }
 
     fun updateCustomer(id: Long, name: String, email: String, mobile: String): Int {
