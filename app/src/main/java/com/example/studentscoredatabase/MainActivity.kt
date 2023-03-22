@@ -1,4 +1,4 @@
-package com.example.CustomerManagement1
+package com.example.studentscoredatabase
 
 import android.annotation.SuppressLint
 import android.content.DialogInterface
@@ -9,7 +9,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import com.example.studentscoredatabase.R
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -79,8 +79,13 @@ class MainActivity : AppCompatActivity() {
 
         val btnSearchUser = findViewById<Button>(R.id.btnSearchUser)
         btnSearchUser.setOnClickListener {
+
             val name = etSearchName.text.toString()
             val cursor = dbHelper.searchCustomer(name)
+            if (name.isEmpty()) {
+                Toast.makeText(this, "Please enter an ID", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             if (cursor.count == 0) {
                 Toast.makeText(this, "No customer found with that name", Toast.LENGTH_SHORT).show()
             } else {

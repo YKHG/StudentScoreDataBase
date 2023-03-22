@@ -1,4 +1,4 @@
-package com.example.CustomerManagement1
+package com.example.studentscoredatabase
 
 
 
