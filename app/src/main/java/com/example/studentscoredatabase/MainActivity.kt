@@ -1,4 +1,4 @@
-package com.example.studentscoredatabase
+package com.example.CustomerManagement1
 
 import android.annotation.SuppressLint
 import android.content.DialogInterface
@@ -9,7 +9,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-
+import com.example.studentscoredatabase.R
 
 
 class MainActivity : AppCompatActivity() {
